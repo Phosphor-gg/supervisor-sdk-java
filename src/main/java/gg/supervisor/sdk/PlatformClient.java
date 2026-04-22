@@ -17,10 +17,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Client for the Supervisor Partner API with OAuth2 client credentials.
+ * Client for the Supervisor Platform API with OAuth2 client credentials.
  * Handles automatic token exchange and refresh.
  */
-public class PartnerClient {
+public class PlatformClient {
     private static final String DEFAULT_BASE_URL = "https://api.supervisor.gg";
 
     private final String clientId;
@@ -32,7 +32,7 @@ public class PartnerClient {
     private String accessToken;
     private Instant tokenExpiresAt = Instant.EPOCH;
 
-    private PartnerClient(Builder builder) {
+    private PlatformClient(Builder builder) {
         this.clientId = builder.clientId;
         this.clientSecret = builder.clientSecret;
         this.baseUrl = builder.baseUrl;
@@ -60,7 +60,7 @@ public class PartnerClient {
             );
 
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(baseUrl + "/api/partner/token"))
+                    .uri(URI.create(baseUrl + "/api/platform/token"))
                     .header("Content-Type", "application/json")
                     .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(tokenReq)))
                     .timeout(Duration.ofSeconds(30))
@@ -72,7 +72,7 @@ public class PartnerClient {
                 handleError(response);
             }
 
-            var tokenResp = objectMapper.readValue(response.body(), PartnerTokenResponse.class);
+            var tokenResp = objectMapper.readValue(response.body(), PlatformTokenResponse.class);
             this.accessToken = tokenResp.accessToken();
             this.tokenExpiresAt = Instant.now().plusSeconds(tokenResp.expiresIn());
             return this.accessToken;
@@ -127,37 +127,37 @@ public class PartnerClient {
 
     /** Provision or link a user by email. */
     public ProvisionUserResponse provisionUser(String email) {
-        return request("POST", "/api/partner/users/provision", Map.of("email", email), new TypeReference<>() {});
+        return request("POST", "/api/platform/users/provision", Map.of("email", email), new TypeReference<>() {});
     }
 
-    /** List all users linked to this partner. */
-    public List<PartnerUserInfo> listUsers() {
-        return request("GET", "/api/partner/users", null, new TypeReference<>() {});
+    /** List all users linked to this platform. */
+    public List<PlatformUserInfo> listUsers() {
+        return request("GET", "/api/platform/users", null, new TypeReference<>() {});
     }
 
     /** Get a specific linked user by ID. */
-    public PartnerUserInfo getUser(String userId) {
-        return request("GET", "/api/partner/users/" + userId, null, new TypeReference<>() {});
+    public PlatformUserInfo getUser(String userId) {
+        return request("GET", "/api/platform/users/" + userId, null, new TypeReference<>() {});
     }
 
     /** Moderate content on behalf of a linked user. */
-    public ModerationResponse moderate(PartnerModerationRequest req) {
-        return request("POST", "/api/partner/moderate", req, new TypeReference<>() {});
+    public ModerationResponse moderate(PlatformModerationRequest req) {
+        return request("POST", "/api/platform/moderate", req, new TypeReference<>() {});
     }
 
-    /** Create a Stripe checkout session for a partner user. */
-    public PartnerCheckoutResponse createCheckout(PartnerCheckoutRequest req) {
-        return request("POST", "/api/partner/checkout", req, new TypeReference<>() {});
+    /** Create a Stripe checkout session for a platform user. */
+    public PlatformCheckoutResponse createCheckout(PlatformCheckoutRequest req) {
+        return request("POST", "/api/platform/checkout", req, new TypeReference<>() {});
     }
 
     /** Confirm a user's authorization with the provided code. */
     public ConfirmAuthorizationResponse confirmAuthorization(String code) {
-        return request("POST", "/api/partner/users/confirm-authorization", Map.of("code", code), new TypeReference<>() {});
+        return request("POST", "/api/platform/users/confirm-authorization", Map.of("code", code), new TypeReference<>() {});
     }
 
     /** Get the Stripe Connect onboarding status. */
     public StripeConnectStatusResponse getConnectStatus() {
-        return request("GET", "/api/partner/connect/status", null, new TypeReference<>() {});
+        return request("GET", "/api/platform/connect/status", null, new TypeReference<>() {});
     }
 
     public static class Builder {
@@ -171,14 +171,14 @@ public class PartnerClient {
         public Builder baseUrl(String baseUrl) { this.baseUrl = baseUrl; return this; }
         public Builder timeout(long timeoutSeconds) { this.timeout = timeoutSeconds; return this; }
 
-        public PartnerClient build() {
+        public PlatformClient build() {
             if (clientId == null || clientId.isBlank()) {
                 throw new IllegalArgumentException("Client ID is required");
             }
             if (clientSecret == null || clientSecret.isBlank()) {
                 throw new IllegalArgumentException("Client secret is required");
             }
-            return new PartnerClient(this);
+            return new PlatformClient(this);
         }
     }
 }

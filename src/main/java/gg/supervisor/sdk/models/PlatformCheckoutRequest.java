@@ -3,9 +3,9 @@ package gg.supervisor.sdk.models;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-/** Create a checkout session for a partner user. */
+/** Create a checkout session for a platform user. */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public record PartnerCheckoutRequest(
+public record PlatformCheckoutRequest(
         @JsonProperty("user_email") String userEmail,
         Tier tier,
         @JsonProperty("billing_cycle") BillingCycle billingCycle,
@@ -29,8 +29,8 @@ public record PartnerCheckoutRequest(
         public Builder successUrl(String successUrl) { this.successUrl = successUrl; return this; }
         public Builder cancelUrl(String cancelUrl) { this.cancelUrl = cancelUrl; return this; }
 
-        public PartnerCheckoutRequest build() {
-            return new PartnerCheckoutRequest(userEmail, tier, billingCycle, successUrl, cancelUrl);
+        public PlatformCheckoutRequest build() {
+            return new PlatformCheckoutRequest(userEmail, tier, billingCycle, successUrl, cancelUrl);
         }
     }
 }

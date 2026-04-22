@@ -80,27 +80,27 @@ System.out.println("Flagged: " + result.isFlagged() + ", Score: " + result.score
 var labels = client.getLabels();
 ```
 
-## Partner API
+## Platform API
 
 ```java
-import gg.supervisor.sdk.PartnerClient;
+import gg.supervisor.sdk.PlatformClient;
 
-var partner = PartnerClient.builder()
+var platform = PlatformClient.builder()
         .clientId("...")
         .clientSecret("...")
         .build();
 
 // Provision a user
-var user = partner.provisionUser("user@example.com");
+var user = platform.provisionUser("user@example.com");
 
 // Moderate on behalf of a user
-var result = partner.moderate(PartnerModerationRequest.builder()
+var result = platform.moderate(PlatformModerationRequest.builder()
         .userEmail("user@example.com")
         .text("check this")
         .build());
 
 // Create checkout session
-var checkout = partner.createCheckout(PartnerCheckoutRequest.builder()
+var checkout = platform.createCheckout(PlatformCheckoutRequest.builder()
         .userEmail("user@example.com")
         .tier(Tier.STANDARD)
         .billingCycle(BillingCycle.MONTHLY)
@@ -109,7 +109,7 @@ var checkout = partner.createCheckout(PartnerCheckoutRequest.builder()
         .build());
 
 // List linked users
-var users = partner.listUsers();
+var users = platform.listUsers();
 ```
 
 ## Configuration

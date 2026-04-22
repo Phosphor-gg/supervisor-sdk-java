@@ -5,5 +5,5 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 /** Checkout session URL response. */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public record PartnerCheckoutResponse(@JsonProperty("checkout_url") String checkoutUrl) {
+public record PlatformCheckoutResponse(@JsonProperty("checkout_url") String checkoutUrl) {
 }
