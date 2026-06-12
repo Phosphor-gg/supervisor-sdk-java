@@ -11,7 +11,8 @@ public record BatchModerationRequest(
         List<String> images,
         ModerationModel model,
         @JsonProperty("enabled_labels") List<ModerationLabel> enabledLabels,
-        @JsonProperty("include_context") Boolean includeContext) {
+        @JsonProperty("include_context") Boolean includeContext,
+        @JsonProperty("include_implicit") Boolean includeImplicit) {
 
     public static Builder builder() {
         return new Builder();
@@ -23,12 +24,14 @@ public record BatchModerationRequest(
         private ModerationModel model;
         private List<ModerationLabel> enabledLabels;
         private Boolean includeContext;
+        private Boolean includeImplicit;
 
         public Builder texts(List<String> texts) { this.texts = texts; return this; }
         public Builder images(List<String> images) { this.images = images; return this; }
         public Builder model(ModerationModel model) { this.model = model; return this; }
         public Builder enabledLabels(List<ModerationLabel> labels) { this.enabledLabels = labels; return this; }
         public Builder includeContext(boolean includeContext) { this.includeContext = includeContext; return this; }
+        public Builder includeImplicit(boolean includeImplicit) { this.includeImplicit = includeImplicit; return this; }
 
         public BatchModerationRequest build() {
             if (texts != null && !texts.isEmpty()
@@ -38,7 +41,7 @@ public record BatchModerationRequest(
                         "When both texts and images are provided, their lengths must be equal: "
                                 + "texts=" + texts.size() + ", images=" + images.size());
             }
-            return new BatchModerationRequest(texts, images, model, enabledLabels, includeContext);
+            return new BatchModerationRequest(texts, images, model, enabledLabels, includeContext, includeImplicit);
         }
     }
 }
