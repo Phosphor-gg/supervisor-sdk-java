@@ -29,8 +29,10 @@ public class PlatformClient {
     private final HttpClient httpClient;
     private final ObjectMapper objectMapper;
 
-    private String accessToken;
-    private Instant tokenExpiresAt = Instant.EPOCH;
+    // volatile so a token cached by a synchronized ensureToken() refresh is
+    // visible to other threads without each re-entering the synchronized block.
+    private volatile String accessToken;
+    private volatile Instant tokenExpiresAt = Instant.EPOCH;
 
     private PlatformClient(Builder builder) {
         this.clientId = builder.clientId;

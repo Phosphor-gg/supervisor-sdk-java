@@ -12,7 +12,8 @@ public record PlatformModerationRequest(
         String image,
         ModerationModel model,
         @JsonProperty("enabled_labels") List<ModerationLabel> enabledLabels,
-        @JsonProperty("include_context") Boolean includeContext) {
+        @JsonProperty("include_context") Boolean includeContext,
+        @JsonProperty("include_implicit") Boolean includeImplicit) {
 
     public static Builder builder() {
         return new Builder();
@@ -25,6 +26,7 @@ public record PlatformModerationRequest(
         private ModerationModel model;
         private List<ModerationLabel> enabledLabels;
         private Boolean includeContext;
+        private Boolean includeImplicit;
 
         public Builder userEmail(String userEmail) { this.userEmail = userEmail; return this; }
         public Builder text(String text) { this.text = text; return this; }
@@ -32,9 +34,10 @@ public record PlatformModerationRequest(
         public Builder model(ModerationModel model) { this.model = model; return this; }
         public Builder enabledLabels(List<ModerationLabel> labels) { this.enabledLabels = labels; return this; }
         public Builder includeContext(boolean includeContext) { this.includeContext = includeContext; return this; }
+        public Builder includeImplicit(boolean includeImplicit) { this.includeImplicit = includeImplicit; return this; }
 
         public PlatformModerationRequest build() {
-            return new PlatformModerationRequest(userEmail, text, image, model, enabledLabels, includeContext);
+            return new PlatformModerationRequest(userEmail, text, image, model, enabledLabels, includeContext, includeImplicit);
         }
     }
 }
