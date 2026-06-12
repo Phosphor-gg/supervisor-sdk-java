@@ -62,6 +62,9 @@ public class SupervisorClient {
         } catch (SupervisorException e) {
             throw e;
         } catch (IOException | InterruptedException e) {
+            if (e instanceof InterruptedException) {
+                Thread.currentThread().interrupt();
+            }
             throw new RuntimeException("HTTP request failed", e);
         }
     }
