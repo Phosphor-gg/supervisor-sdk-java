@@ -112,10 +112,10 @@ public class SupervisorClient {
     /**
      * Get all available moderation labels.
      *
-     * @return list of all ModerationLabel values supported by the API
+     * @return map of label name to description for every label supported by the API
      */
-    public List<ModerationLabel> getLabels() {
-        return this.request("GET", "/api/labels", null, new TypeReference<>() {});
+    public Map<String, String> getLabels() {
+        return this.request("GET", "/api/labels", null, new TypeReference<Map<String, String>>() {});
     }
 
     public static class Builder {
