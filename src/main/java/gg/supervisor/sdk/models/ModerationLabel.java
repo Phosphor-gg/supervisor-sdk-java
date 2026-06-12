@@ -19,8 +19,7 @@ public enum ModerationLabel {
     SPAM("spam"),
     PROMOTIONAL("promotional"),
     SCAM("scam"),
-    ILLEGAL("illegal"),
-    PERSONAL_DATA("personal-data");
+    ILLEGAL("illegal");
 
     private final String value;
 
