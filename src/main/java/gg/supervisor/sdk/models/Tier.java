@@ -4,10 +4,10 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 /** Subscription tiers. */
 public enum Tier {
-    FREE("Free"),
-    BASIC("Basic"),
-    STANDARD("Standard"),
-    PREMIUM("Premium");
+    FREE("free"),
+    BASIC("basic"),
+    STANDARD("standard"),
+    PREMIUM("premium");
 
     private final String value;
 
