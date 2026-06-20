@@ -10,7 +10,7 @@ public enum ModerationLabel {
     HATE("hate"),
     INSULT("insult"),
     SEXUAL("sexual"),
-    SEXUAL_MINORS("sexual/minors"),
+    SEXUAL_UNLAWFUL("sexual/unlawful"),
     SEXUAL_EXPLICIT("sexual/explicit"),
     SENSITIVE("sensitive"),
     VIOLENCE("violence"),
