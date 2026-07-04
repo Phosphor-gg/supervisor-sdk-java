@@ -7,7 +7,9 @@ public enum Tier {
     FREE("free"),
     BASIC("basic"),
     STANDARD("standard"),
-    PREMIUM("premium");
+    PREMIUM("premium"),
+    /** Lifetime plan: one-time purchase, no billing cycle. */
+    VERIFIED("verified");
 
     private final String value;
 
