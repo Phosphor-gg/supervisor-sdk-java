@@ -163,6 +163,21 @@ public class PlatformClient {
         return request("POST", "/api/platform/change-plan", req, new TypeReference<>() {});
     }
 
+    /** List the plans and credit packs this platform can sell. */
+    public PlatformProductsResponse getProducts() {
+        return request("GET", "/api/platform/products", null, new TypeReference<>() {});
+    }
+
+    /** Create a Stripe checkout for a credit pack purchase (revenue share applies). */
+    public PlatformCheckoutResponse createCreditCheckout(PlatformCreditCheckoutRequest req) {
+        return request("POST", "/api/platform/checkout-credits", req, new TypeReference<>() {});
+    }
+
+    /** Get the remaining credits of an authorized linked user. */
+    public PlatformUserCreditsResponse getUserCredits(String userId) {
+        return request("GET", "/api/platform/users/" + userId + "/credits", null, new TypeReference<>() {});
+    }
+
     /** Confirm a user's authorization with the provided code. */
     public ConfirmAuthorizationResponse confirmAuthorization(String code) {
         return request("POST", "/api/platform/users/confirm-authorization", Map.of("code", code), new TypeReference<>() {});
