@@ -17,7 +17,7 @@ import java.util.Map;
 
 /** Client for the Supervisor content moderation API. */
 public class SupervisorClient {
-    private static final String DEFAULT_BASE_URL = "https://api.supervisor.gg";
+    private static final String DEFAULT_BASE_URL = "https://supervisor.gg";
 
     private final String apiKey;
     private final String baseUrl;
