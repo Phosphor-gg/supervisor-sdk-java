@@ -9,5 +9,6 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record PlatformProductsResponse(
         List<PlanPrice> plans,
-        @JsonProperty("credit_packs") List<CreditPack> creditPacks) {
+        @JsonProperty("credit_packs") List<CreditPack> creditPacks,
+        LifetimePlan lifetime) {
 }
