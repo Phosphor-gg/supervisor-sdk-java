@@ -21,7 +21,7 @@ import java.util.Map;
  * Handles automatic token exchange and refresh.
  */
 public class PlatformClient {
-    private static final String DEFAULT_BASE_URL = "https://api.supervisor.gg";
+    private static final String DEFAULT_BASE_URL = "https://supervisor.gg";
 
     private final String clientId;
     private final String clientSecret;
@@ -156,6 +156,11 @@ public class PlatformClient {
     /** Create a Stripe checkout session for a platform user. */
     public PlatformCheckoutResponse createCheckout(PlatformCheckoutRequest req) {
         return request("POST", "/api/platform/checkout", req, new TypeReference<>() {});
+    }
+
+    /** Change the plan of a platform user's active subscription. */
+    public PlatformChangePlanResponse changePlan(PlatformChangePlanRequest req) {
+        return request("POST", "/api/platform/change-plan", req, new TypeReference<>() {});
     }
 
     /** Confirm a user's authorization with the provided code. */
