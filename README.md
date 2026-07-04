@@ -136,6 +136,35 @@ System.out.println("Subscription: " + change.subscriptionId());
 
 `createCheckout` returns 403 if the user has not authorized the platform, and 400 if the user already has an active subscription (use `changePlan` instead). `changePlan` returns 403 if the subscription was not originated by this platform, and 400 if there is no active subscription. Revenue share is set at subscription creation and preserved across plan changes.
 
+### Products and checkout links
+
+Platforms sell Supervisor plans and credit packs from their own site. List the products, render them however you like, and when a user clicks, mint a per-user checkout link and redirect. Revenue share applies to both product types.
+
+```java
+PlatformProductsResponse products = platform.getProducts();
+// products.plans(): subscription tiers with prices in cents
+// products.creditPacks(): one-time credit packs
+
+// Credit pack checkout (one-time payment)
+PlatformCheckoutResponse credits = platform.createCreditCheckout(
+    PlatformCreditCheckoutRequest.builder()
+        .userEmail("user@example.com")
+        .priceId(products.creditPacks().get(0).priceId())
+        .successUrl("https://myapp.com/thanks")
+        .cancelUrl("https://myapp.com/pricing")
+        .build());
+// redirect the user to credits.checkoutUrl()
+```
+
+Show an authorized user their remaining credits:
+
+```java
+PlatformUserCreditsResponse balance = platform.getUserCredits(userId);
+// balance.balance() is the total usable right now; monthly and extra breakdowns included
+```
+
+Returns 403 if the user has not authorized your platform.
+
 ## Configuration
 
 ```java
