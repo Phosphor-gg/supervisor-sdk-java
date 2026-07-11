@@ -89,6 +89,10 @@ public class SupervisorClient {
      * @return ModerationResponse with flagged status and detected labels
      */
     public ModerationResponse moderate(ModerationRequest request) {
+        if (request.image() != null && !request.image().isBlank()) {
+            request = new ModerationRequest(request.text(), ImagePrep.prepareImage(request.image()),
+                    request.model(), request.enabledLabels(), request.includeContext(), request.includeImplicit());
+        }
         return this.request("POST", "/api/moderate", request, new TypeReference<>() {});
     }
 
@@ -99,6 +103,13 @@ public class SupervisorClient {
      * @return list of ModerationResponse, one per input text
      */
     public List<ModerationResponse> moderateBatch(BatchModerationRequest request) {
+        if (request.images() != null && !request.images().isEmpty()) {
+            List<String> images = request.images().stream()
+                    .map(image -> image == null || image.isBlank() ? image : ImagePrep.prepareImage(image))
+                    .toList();
+            request = new BatchModerationRequest(request.texts(), images,
+                    request.model(), request.enabledLabels(), request.includeContext(), request.includeImplicit());
+        }
         return this.request("POST", "/api/batch", request, new TypeReference<>() {});
     }
 

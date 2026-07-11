@@ -150,6 +150,10 @@ public class PlatformClient {
 
     /** Moderate content on behalf of a linked user. */
     public ModerationResponse moderate(PlatformModerationRequest req) {
+        if (req.image() != null && !req.image().isBlank()) {
+            req = new PlatformModerationRequest(req.userEmail(), req.text(), ImagePrep.prepareImage(req.image()),
+                    req.model(), req.enabledLabels(), req.includeContext(), req.includeImplicit());
+        }
         return request("POST", "/api/platform/moderate", req, new TypeReference<>() {});
     }
 
